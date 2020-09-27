@@ -1,9 +1,11 @@
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.awt.TextArea;
 import java.net.*;
 import java.io.DataOutputStream;
 import java.io.IOException;
+
 
 
 public class Cliente {
@@ -38,10 +40,19 @@ class MarcoCliente extends JFrame{
 class LaminaMarcoCliente extends JPanel{
 
     public LaminaMarcoCliente(){
+        nick = new JTextField (5);
+        add(nick);
 
-        JLabel texto=new JLabel("CLIENTE");
+
+        JLabel texto=new JLabel("-CHAT-");
 
         add(texto);
+        ip= new JTextField(8);
+        add(ip);
+
+        campochat = new JTextArea(12,30);
+
+        add(campochat);
 
         campo1=new JTextField(20);
 
@@ -85,7 +96,9 @@ class LaminaMarcoCliente extends JPanel{
     }
 
 
-    private JTextField campo1;
+    private JTextField campo1, nick, ip;
+
+    private JTextArea campochat;
 
     private JButton miboton;
 
