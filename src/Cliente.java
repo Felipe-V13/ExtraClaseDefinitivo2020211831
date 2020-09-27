@@ -1,5 +1,6 @@
 
 import javax.swing.*;
+import java.awt.event.*;
 
 
 public class Cliente {
@@ -45,11 +46,23 @@ class LaminaMarcoCliente extends JPanel{
 
         miboton=new JButton("Enviar");
 
+        EnviaTexto mievento=new EnviaTexto();
+
+        miboton.addActionListener(mievento);
+
         add(miboton);
 
     }
 
+    private class EnviaTexto implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e){
+            //TODO-generated method stub
+                //System.out.println(campo1.getText());
 
+        }
+
+    }
 
 
 
