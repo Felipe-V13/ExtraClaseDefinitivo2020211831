@@ -3,6 +3,9 @@
 import javax.swing.*;
 
 import java.awt.*;
+import java.io.IOException;
+import java.net.*;
+import java.io.DataInputStream;
 
 public class Servidor  {
 
@@ -16,7 +19,7 @@ public class Servidor  {
     }
 }
 
-class MarcoServidor extends JFrame {
+class MarcoServidor extends JFrame implements Runnable {
 
     public MarcoServidor(){
 
@@ -33,8 +36,41 @@ class MarcoServidor extends JFrame {
         add(milamina);
 
         setVisible(true);
+        Thread mihilo= new Thread (this);
+        mihilo.start();
 
     }
 
+
+
+
+    @Override
+    public void run (){
+        //ServerSocket servidor = new Server Socket(4999);
+        try{
+            ServerSocket servidor = new ServerSocket(4999);
+
+            while(true) {
+
+                Socket misocket = servidor.accept();
+
+                DataInputStream flujo_entrada = new DataInputStream(misocket.getInputStream());
+
+                String mensaje_texto = flujo_entrada.readUTF();
+
+                areatexto.append("\n" + mensaje_texto);
+
+                misocket.close();
+            }
+
+
+
+
+        } catch (IOException e){
+            e.printStackTrace();
+
+        }
+
+    }
     private	JTextArea areatexto;
 }

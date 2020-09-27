@@ -2,6 +2,8 @@
 import javax.swing.*;
 import java.awt.event.*;
 import java.net.*;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 
 public class Cliente {
