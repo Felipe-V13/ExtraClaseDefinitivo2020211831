@@ -5,6 +5,8 @@ import java.awt.TextArea;
 import java.net.*;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 
 
@@ -77,10 +79,23 @@ class LaminaMarcoCliente extends JPanel{
             try {
                 Socket misocket = new Socket("127.0.0.1", 4999);
 
+                PaqueteEnvio datos = new PaqueteEnvio();
 
-                DataOutputStream flujo_salida=new DataOutputStream(misocket.getOutputStream());
+                datos.setNick(nick.getText());
+
+                datos.setIp(ip.getText());
+
+                datos.setMensaje(campo1.getText());
+
+                ObjectOutputStream paquete_datos = new ObjectOutputStream(misocket.getOutputStream());
+
+                paquete_datos.writeObject(datos);
+
+                misocket.close();
+
+                /*DataOutputStream flujo_salida=new DataOutputStream(misocket.getOutputStream());
                 flujo_salida.writeUTF(campo1.getText());
-                flujo_salida.close();
+                flujo_salida.close();*/
 
             } catch (UnknownHostException e1) {
                 //TODO Auto-generated catch Bloc
@@ -106,7 +121,7 @@ class LaminaMarcoCliente extends JPanel{
 }
 
 
-class PaqueteEnvio{
+class PaqueteEnvio implements Serializable{
     private String nick, ip, mensaje;
 
     public String getMensaje() {
