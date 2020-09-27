@@ -1,6 +1,7 @@
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.net.*;
 
 
 public class Cliente {
@@ -54,17 +55,32 @@ class LaminaMarcoCliente extends JPanel{
 
     }
 
-    private class EnviaTexto implements ActionListener{
+    private class EnviaTexto implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e){
+        public void actionPerformed(ActionEvent e) {
             //TODO-generated method stub
-                //System.out.println(campo1.getText());
+            //System.out.println(campo1.getText());
+            try {
+                Socket misocket = new Socket("127.0.0.1", 4999);
+
+
+                DataOutputStream flujo_salida=new DataOutputStream(misocket.getOutputStream());
+                flujo_salida.writeUTF(campo1.getText());
+                flujo_salida.close();
+
+            } catch (UnknownHostException e1) {
+                //TODO Auto-generated catch Bloc
+                e1.printStackTrace();
+
+            } catch (IOException e1) {
+                //TODO Auto-generated catch Block
+
+                System.out.println(e1.getMessage());
+            }
 
         }
 
     }
-
-
 
 
     private JTextField campo1;
