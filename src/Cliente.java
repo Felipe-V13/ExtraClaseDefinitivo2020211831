@@ -41,6 +41,7 @@ class LaminaMarcoCliente extends JPanel{
 
     public LaminaMarcoCliente(){
         nick = new JTextField (5);
+
         add(nick);
 
 
@@ -102,4 +103,33 @@ class LaminaMarcoCliente extends JPanel{
 
     private JButton miboton;
 
+}
+
+
+class PaqueteEnvio{
+    private String nick, ip, mensaje;
+
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public String getNick() {
+        return nick;
+    }
+
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
 }
