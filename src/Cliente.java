@@ -1,4 +1,6 @@
+//@authorLuisFelipeVargasJiménez
 
+//se importan las bibliotecas y variables que necesitamso
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.TextArea;
@@ -9,7 +11,10 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.io.ObjectInputStream;
 
-
+/**
+ * Se crea una clase pública a la cual se le denomina cliente
+ * @version Cliente
+ * @MarcoCliente, se crea dicha variable*/
 
 public class Cliente {
 
@@ -24,7 +29,10 @@ public class Cliente {
 
 }
 
-
+/**
+ * Se crea la Clase MarcoCLiente, esta es una extensión de JFrame
+ * las dimensiones de la ventana son creadas en este apartado
+ * se toma a setVisible como true*/
 class MarcoCliente extends JFrame{
 
     public MarcoCliente(){
@@ -39,7 +47,12 @@ class MarcoCliente extends JFrame{
     }
 
 }
-
+/**
+ * Se crea la clase LaminaMarcoCliente que hace un extends Jpanel, esta a su vez en un hilo por ende se tiene que implementar Runnable
+ * Se le añade un espacio para el nick name del cliente
+ * Se le agrega un Jlabel para el nombre de la ventana que será CHAT
+ * Además se le agrega un espacio para agregar a la ip con la cual se quiere enlazar
+ * SE crea un boton "Enviar"*/
 class LaminaMarcoCliente extends JPanel implements Runnable {
 
 
@@ -76,6 +89,10 @@ class LaminaMarcoCliente extends JPanel implements Runnable {
         mihilo.start();
 
     }
+    /**
+     * @version EnviaTexto, esta implementa ActionListener, para estar siempre  la escucha del servidor
+     * @param ActionEvent se crea el evento del socket, en el cual tiene la ip del servidor y la ip del cliente
+     * @Exception UnknowHostException cunado el host está vacío */
 
     private class EnviaTexto implements ActionListener {
         @Override
@@ -117,13 +134,18 @@ class LaminaMarcoCliente extends JPanel implements Runnable {
 
     }
 
-
+/**se establecen los campos para el campo1, el nick name, y el ip de la persona con quien quiera comunicarse
+ * Se crea el espacio para el campochat
+ * además del espacio */
     private JTextField campo1, nick, ip;
 
     private JTextArea campochat;
 
     private JButton miboton;
-
+/**
+ * Se establece el @Override para que se pueda ejecutar el try del Server Socket
+ * Se establece un flujo de entrada para que los mensajes se vayan actualizando conforme los envía tanto el cliente como el servidor
+ * Se establecen las variables para que al cliente para que en la pantalla de texto salga el nick, y su mensaje*/
     @Override
     public void run() {
         try {
@@ -153,7 +175,11 @@ class LaminaMarcoCliente extends JPanel implements Runnable {
 
     }
 }
-
+/**
+ * Se crea la clase PaqueteEnvio con la implemetacion de Serializable. Con la finalidad de que converta los objetos en bytes y depúes pueda recuperarlos
+ * Se crean los Trings nick, ip y mensaje
+ * Cada uno de estos se va actulizando conforme el timpo transcurrido
+ * Lo único que sí se va a ctualizar ocn el timepo son los mensajes, porque la ip al igual que el nick el clinete lo va a tener que poner de primero*/
 
 class PaqueteEnvio implements Serializable{
     private String nick, ip, mensaje;
