@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.*;
 import java.io.DataInputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class Servidor  {
 
@@ -71,12 +72,17 @@ class MarcoServidor extends JFrame implements Runnable {
 
                 mensaje = paquete_recibido.getMensaje();
 
-                /*DataInputStream flujo_entrada = new DataInputStream(misocket.getInputStream());
-
-                String mensaje_texto = flujo_entrada.readUTF();
-
-                areatexto.append("\n" + mensaje_texto);*/
                 areatexto.append("\n" + nick + ":" + mensaje + " para " + ip);
+
+                Socket enviaDestinatario = new Socket(ip,9090);
+
+                ObjectOutputStream paqueteReenvio = new ObjectOutputStream(enviaDestinatario.getOutputStream());
+
+                paqueteReenvio.writeObject(paquete_recibido);
+
+                paqueteReenvio.close();
+
+                enviaDestinatario.close();
 
                 misocket.close();
             }

@@ -7,6 +7,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.io.ObjectInputStream;
 
 
 
@@ -39,35 +40,40 @@ class MarcoCliente extends JFrame{
 
 }
 
-class LaminaMarcoCliente extends JPanel{
+class LaminaMarcoCliente extends JPanel implements Runnable {
 
-    public LaminaMarcoCliente(){
-        nick = new JTextField (5);
+
+    public LaminaMarcoCliente() {
+        nick = new JTextField(5);
 
         add(nick);
 
 
-        JLabel texto=new JLabel("-CHAT-");
+        JLabel texto = new JLabel("-CHAT-");
 
         add(texto);
-        ip= new JTextField(8);
+        ip = new JTextField(8);
         add(ip);
 
-        campochat = new JTextArea(12,30);
+        campochat = new JTextArea(12, 30);
 
         add(campochat);
 
-        campo1=new JTextField(20);
+        campo1 = new JTextField(20);
 
         add(campo1);
 
-        miboton=new JButton("Enviar");
+        miboton = new JButton("Enviar");
 
-        EnviaTexto mievento=new EnviaTexto();
+        EnviaTexto mievento = new EnviaTexto();
 
         miboton.addActionListener(mievento);
 
         add(miboton);
+
+        Thread mihilo = new Thread(this);
+
+        mihilo.start();
 
     }
 
@@ -118,6 +124,34 @@ class LaminaMarcoCliente extends JPanel{
 
     private JButton miboton;
 
+    @Override
+    public void run() {
+        try {
+
+            ServerSocket servidor_cliente = new ServerSocket(9090);
+
+            Socket cliente;
+
+            PaqueteEnvio paqueteRecibido;
+            while (true) {
+                cliente = servidor_cliente.accept();
+
+                ObjectInputStream flujoentrada = new ObjectInputStream(cliente.getInputStream());
+
+                paqueteRecibido = (PaqueteEnvio) flujoentrada.readObject();
+
+                campochat.append("\n" + paqueteRecibido.getNick() + ":" + paqueteRecibido.getMensaje());
+
+
+            }
+
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+
+    }
 }
 
 
